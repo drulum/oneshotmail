@@ -1,0 +1,11 @@
+# PyCharm is lovely, but their prefs dir is nasty.
+.idea
+
+# Do not upload usernames or passwords!
+.env
+
+# Do not upload any real world data.
+contacts.csv
+from.txt
+subject.txt
+message.txt

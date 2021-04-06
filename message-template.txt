@@ -1,0 +1,5 @@
+Hello {name},
+
+This file should be a normal plain text message spread over as many lines as you need.
+
+You can personalise it with the {name} tag as above, which will replace the tag with the "Short name" field from the contacts.csv file for each recipient.
