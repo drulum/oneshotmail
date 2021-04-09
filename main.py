@@ -93,24 +93,34 @@ class OneShot:
         self.email_run()
 
 
+def display_menu():
+    print('\nOne Shot Mail')
+    print('=============\n')
+    print('1. Preview the email that will be sent.')
+    print('2. Trial run with files in the email preparation sub directory.')
+    print('3. LIVE RUN with files in the email preparation sub directory.')
+    print('0. Exit One Shot Mail.\n')
+
+
 if __name__ == '__main__':
     try:
         one_shot = OneShot()
-        print('One Shot Mail')
-        print('=============\n')
-        print('1. Preview the email that will be sent.')
-        print('2. Trial run with files in the email preparation sub directory.')
-        print('3. LIVE RUN with files in the email preparation sub directory.')
-        choice = input('\nEnter option: ')
+        display_menu()
+        choice = input('Enter option: ')
         while True:
             if choice == '1':
                 one_shot.preview()
+                display_menu()
+                choice = input('Enter option: ')
             elif choice == '2':
                 one_shot.simple_test_run()
                 break
             elif choice == '3':
                 one_shot.simple_send()
                 break
+            elif choice == '0':
+                print('\nGoodbye!')
+                quit()
             else:
                 choice = input('\nPlease ensure you select an option from the list: ')
     except FileNotFoundError as error:
@@ -118,4 +128,4 @@ if __name__ == '__main__':
         print('Please run the application again once this has been corrected.')
         quit()
 
-    print('\nRun complete. All emails sent successfully.')
+    print('\nRun complete. All emails sent successfully.\nGoodbye!')
