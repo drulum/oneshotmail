@@ -1,7 +1,6 @@
 TODO: Plan additional class methods to allow flexibility in file locations, console/GUI etc.
-TODO: Catch & handle exceptions in code rather than allowing the program to die if it encounters a problem.
+TODO: Catch & handle exceptions in code rather than allowing the program to die if it encounters a problem. (Started.)
 TODO: Implement testing using pytest.
 TODO: Improve the README.
-TODO: Add a trial_run method to OneShot which will use a local test smtpd and print the emails to the console.
 TODO: Improve and categorise this TODO file...
-TODO: Consider creating a sub-directory for each mail batch. Select at runtime which to use?
+TODO: Consider creating a sub-directory for each mail batch. Select at runtime which to use? (Single subdir at present.)
