@@ -72,16 +72,24 @@ class OneShot:
                 server.send_message(msg)
                 print(f'{index}. Message sent to {short_name} at "{full_name} <{email}>".')
 
-    def simple_test_run(self):
-        """Runs through a full email construction & send test, but prints to a console using a local debugging smtp."""
+    def construct(self):
         self.confirm_files_exist()
         self.collect_message_parts()
+
+    def preview(self):
+        self.construct()
+        print(f'\nEmails will be sent from "{self.email_from}".')
+        print(f'The subject line is "{self.email_subject}"')
+        print(f'The message body is:\n{self.email_message}')
+
+    def simple_test_run(self):
+        """Runs through a full email construction & send test, but prints to a console using a local debugging smtp."""
+        self.construct()
         self.trial_run()
 
     def simple_send(self):
         """Constructs & sends emails to the configured live smtp without further interaction from the user."""
-        self.confirm_files_exist()
-        self.collect_message_parts()
+        self.construct()
         self.email_run()
 
 
@@ -89,21 +97,24 @@ if __name__ == '__main__':
     try:
         one_shot = OneShot()
         print('One Shot Mail')
-        print('=============')
-        print('1. Trial run with files in the email preparation sub directory.')
-        print('2. LIVE RUN with files in the email preparation sub directory.')
-        choice = input('Enter option: ')
+        print('=============\n')
+        print('1. Preview the email that will be sent.')
+        print('2. Trial run with files in the email preparation sub directory.')
+        print('3. LIVE RUN with files in the email preparation sub directory.')
+        choice = input('\nEnter option: ')
         while True:
             if choice == '1':
+                one_shot.preview()
+            elif choice == '2':
                 one_shot.simple_test_run()
                 break
-            elif choice == '2':
+            elif choice == '3':
                 one_shot.simple_send()
                 break
             else:
-                choice = input('Please select an option from the list: ')
+                choice = input('\nPlease ensure you select an option from the list: ')
     except FileNotFoundError as error:
-        print(error)
+        print(f'\n{error}')
         print('Please run the application again once this has been corrected.')
         quit()
 
