@@ -68,8 +68,8 @@ if __name__ == '__main__':
     try:
         one_shot = OneShot()
         one_shot.simple_send()
-    except FileNotFoundError as err:
-        print(err)
+    except FileNotFoundError as error:
+        print(error)
         print('Please run the application again once this has been corrected.')
         quit()
 
