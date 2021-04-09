@@ -4,3 +4,4 @@ TODO: Implement testing using pytest.
 TODO: Improve the README.
 TODO: Improve and categorise this TODO file...
 TODO: Consider creating a sub-directory for each mail batch. Select at runtime which to use? (Single subdir at present.)
+TODO: Improve the docstrings and comments in the code.
