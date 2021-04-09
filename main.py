@@ -86,10 +86,22 @@ class OneShot:
 
 
 if __name__ == '__main__':
-    # TODO: Add a simple menu to ask if they want to do a trial run printing to console or the real run.
     try:
         one_shot = OneShot()
-        one_shot.simple_send()
+        print('One Shot Mail')
+        print('=============')
+        print('1. Trial run with files in the email preparation sub directory.')
+        print('2. LIVE RUN with files in the email preparation sub directory.')
+        choice = input('Enter option: ')
+        while True:
+            if choice == '1':
+                one_shot.simple_test_run()
+                break
+            elif choice == '2':
+                one_shot.simple_send()
+                break
+            else:
+                choice = input('Please select an option from the list: ')
     except FileNotFoundError as error:
         print(error)
         print('Please run the application again once this has been corrected.')
