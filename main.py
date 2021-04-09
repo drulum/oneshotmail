@@ -34,7 +34,8 @@ class OneShot:
             if not Path.is_file(Path(self.base_dir, file)):
                 raise FileNotFoundError(f'The file "{file}" was not found in the directory "{self.base_dir}".')
 
-    def create_message(self):
+    def collect_message_parts(self):
+        """Gets the static email data from the files."""
         with open(Path(self.base_dir, self.file_from)) as file:
             self.email_from = file.readline()
         with open(Path(self.base_dir, self.file_subject)) as file:
@@ -43,16 +44,22 @@ class OneShot:
             self.email_message = file.read()
 
     def trial_run(self):
-        # Construct emails normally but send to a local test smtpd for printing to console.
-        pass
+        """Constructs the emails normally but send to a local test smtpd for printing to console.
+
+        Start a local debugging smtp with the following command. May need to use sudo on Linux.
+        python -m smtpd -c DebuggingServer -n localhost:1025"""
+        with smtplib.SMTP('localhost', 1025) as server:
+            self.send_emails(server)
 
     def email_run(self):
+        """Connects to the live email server securely and send the emails."""
         context = ssl.create_default_context()
         with smtplib.SMTP_SSL(email_host, email_port, context=context) as server:
             server.login(email_host_user, email_host_password)
             self.send_emails(server)
 
     def send_emails(self, server):
+        """Sends emails to the configured email server."""
         with open(Path(self.base_dir, self.file_contacts)) as file:
             reader = csv.reader(file)
             next(reader)
@@ -65,13 +72,21 @@ class OneShot:
                 server.send_message(msg)
                 print(f'{index}. Message sent to {short_name} at "{full_name} <{email}>".')
 
-    def simple_send(self):
+    def simple_test_run(self):
+        """Runs through a full email construction & send test, but prints to a console using a local debugging smtp."""
         self.confirm_files_exist()
-        self.create_message()
+        self.collect_message_parts()
+        self.trial_run()
+
+    def simple_send(self):
+        """Constructs & sends emails to the configured live smtp without further interaction from the user."""
+        self.confirm_files_exist()
+        self.collect_message_parts()
         self.email_run()
 
 
 if __name__ == '__main__':
+    # TODO: Add a simple menu to ask if they want to do a trial run printing to console or the real run.
     try:
         one_shot = OneShot()
         one_shot.simple_send()
