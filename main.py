@@ -26,18 +26,10 @@ class OneShot:
         self.email_subject = None
         self.email_message = None
 
-        # Ensure the files exist in the email-preparation subdir before continuing.
-        self.confirm_files_exist([self.file_from, self.file_subject, self.file_message, self.file_contacts])
-
-        # Collect the data that does not change.
-        self.create_message()
-
-        # Send the constructed emails.
-        self.send_emails()
-
-    def confirm_files_exist(self, files):
+    def confirm_files_exist(self):
         """Takes a list of filenames, appends them to the base directory and confirms they exist.
         Raises a FileNotFound exception on the first filename that doesn't exist."""
+        files = [self.file_from, self.file_subject, self.file_message, self.file_contacts]
         for file in files:
             if not Path.is_file(Path(self.base_dir, file)):
                 raise FileNotFoundError(f'The file "{file}" was not found in the directory "{self.base_dir}".')
@@ -66,10 +58,16 @@ class OneShot:
                     server.send_message(msg)
                     print(f'{index}. Message sent to {short_name} at "{full_name} <{email}>".')
 
+    def simple_send(self):
+        self.confirm_files_exist()
+        self.create_message()
+        self.send_emails()
+
 
 if __name__ == '__main__':
     try:
         one_shot = OneShot()
+        one_shot.simple_send()
     except FileNotFoundError as err:
         print(err)
         print('Please run the application again once this has been corrected.')
