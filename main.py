@@ -42,30 +42,33 @@ class OneShot:
         with open(Path(self.base_dir, self.file_message)) as file:
             self.email_message = file.read()
 
-    def send_emails(self):
+    def trial_run(self):
+        # Construct emails normally but send to a local test smtpd for printing to console.
+        pass
+
+    def email_run(self):
         context = ssl.create_default_context()
         with smtplib.SMTP_SSL(email_host, email_port, context=context) as server:
             server.login(email_host_user, email_host_password)
-            with open(Path(self.base_dir, self.file_contacts)) as file:
-                reader = csv.reader(file)
-                next(reader)
-                for index, (short_name, full_name, email) in enumerate(reader, start=1):
-                    msg = EmailMessage()
-                    msg.set_content(self.email_message.format(name=short_name))
-                    msg['Subject'] = self.email_subject
-                    msg['From'] = self.email_from
-                    msg['To'] = f'{full_name} <{email}>'
-                    server.send_message(msg)
-                    print(f'{index}. Message sent to {short_name} at "{full_name} <{email}>".')
+            self.send_emails(server)
+
+    def send_emails(self, server):
+        with open(Path(self.base_dir, self.file_contacts)) as file:
+            reader = csv.reader(file)
+            next(reader)
+            for index, (short_name, full_name, email) in enumerate(reader, start=1):
+                msg = EmailMessage()
+                msg.set_content(self.email_message.format(name=short_name))
+                msg['Subject'] = self.email_subject
+                msg['From'] = self.email_from
+                msg['To'] = f'{full_name} <{email}>'
+                server.send_message(msg)
+                print(f'{index}. Message sent to {short_name} at "{full_name} <{email}>".')
 
     def simple_send(self):
         self.confirm_files_exist()
         self.create_message()
-        self.send_emails()
-
-    def trial_run(self):
-        # Construct emails normally but send to a local test smtpd for printing to console.
-        pass
+        self.email_run()
 
 
 if __name__ == '__main__':
