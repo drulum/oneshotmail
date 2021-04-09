@@ -63,6 +63,10 @@ class OneShot:
         self.create_message()
         self.send_emails()
 
+    def trial_run(self):
+        # Construct emails normally but send to a local test smtpd for printing to console.
+        pass
+
 
 if __name__ == '__main__':
     try:
