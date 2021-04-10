@@ -24,9 +24,9 @@ You will need the following files. Either create them yourself or rename those p
 Running main.py directly
 ========================
 
-This will provide you with a simple console application allowing you to choose whether to carry out a trial run or send the emails. Both options use the files stored in the **email-preparation** folder and require no further interaction.
+This will provide you with a simple console application allowing you to preview the message to be sent, carry out a trial run or send the emails. Each option uses the files stored in the **email-preparation** folder.
 
-In order to carry out a trial run, issue the following command in a separate console. On Linux you may need to precede the command with ```sudo```. The emails will be constructed normally and then printed to the console running the smtpd DebuggingServer.
+In order to carry out a trial run, issue the following command in a separate console. On Linux you may need to prefix the command with ```sudo```. The emails will be constructed normally and then printed to the console running the smtpd DebuggingServer.
 
 ```commandline
 python -m smtpd -c DebuggingServer -n localhost:1025
@@ -35,15 +35,11 @@ python -m smtpd -c DebuggingServer -n localhost:1025
 Calling the class from your own application
 ===========================================
 
-Import the class normally, adjusting for how and where you have the file on your system.
+Import the class normally, adjusting for how and where you have the file on your system, then create an instance of the class.
 
 ```python
 from main import OneShot
-```
 
-Create an instance of the class.
-
-```python
 mailshot = OneShot()
 ```
 
