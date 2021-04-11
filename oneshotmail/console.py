@@ -34,8 +34,15 @@ class OneShotConsole:
                 print(f'\nThe message body is:\n{one_shot.email_message}')
                 input('\nPress <return> to continue.')
             elif self.choice == '2':
-                # TODO: Display information on launching debugging smtpd and require <return> to continue.
+                print('\nBefore continuing, carry out the following instructions.')
+                print('\n1. Open a second console window.')
+                print('   (Windows: Command Prompt. Linux: terminal)')
+                print('\n2. In the new console window, enter the following command.')
+                print('   (Linux: you may need to prefix with "sudo")')
+                print('   python -m smtpd -c DebuggingServer -n localhost:1025')
+                input('\nWhen you are ready to carry out the trial run, press <return>.')
                 one_shot.simple_test_run()
+                print('\nThe trial run should now have completed.')
                 input('\nPress <return> to continue.')
             elif self.choice == '3':
                 print('\nOne Shot Mail will exit once all emails have been sent.\n')

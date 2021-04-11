@@ -1,4 +1,5 @@
-from oneshotmail.console import OneShotConsole
+from console import OneShotConsole
+import sys
 
 try:
     console = OneShotConsole()
@@ -6,6 +7,10 @@ try:
 except FileNotFoundError as error:
     print(f'\n{error}')
     print('Please run the application again once this has been corrected.')
-    quit()
+    sys.exit()
+except ConnectionRefusedError as error:
+    print(f'\n{error}')
+    print('Please run the application again once this has been corrected.')
+    sys.exit()
 
 print('\nRun complete. All emails sent successfully.\n\nGoodbye!')
