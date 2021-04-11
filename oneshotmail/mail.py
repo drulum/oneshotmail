@@ -25,6 +25,7 @@ class OneShot:
         self.email_from = None
         self.email_subject = None
         self.email_message = None
+        self.emails_sent = []
 
     def confirm_files_exist(self):
         """Takes a list of filenames, appends them to the base directory and confirms they exist.
@@ -70,7 +71,10 @@ class OneShot:
                 msg['From'] = self.email_from
                 msg['To'] = f'{full_name} <{email}>'
                 server.send_message(msg)
-                print(f'{index}. Message sent to {short_name} at "{full_name} <{email}>".')
+                # TODO: remove print statement and find another way to get the data back - perhaps a class list?
+                self.emails_sent.clear()
+                self.emails_sent.append({'index': index, 'short_name': short_name,
+                                         'full_name': full_name, 'email': email})
 
     def construct(self):
         self.confirm_files_exist()

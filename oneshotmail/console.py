@@ -42,6 +42,8 @@ class OneShotConsole:
                 print('   python -m smtpd -c DebuggingServer -n localhost:1025')
                 input('\nWhen you are ready to carry out the trial run, press <return>.')
                 one_shot.simple_test_run()
+                for email in one_shot.emails_sent:
+                    print(f'{email.index}. Message sent to {email.short_name} at "{email.full_name} <{email.email}>".')
                 print('\nThe trial run should now have completed.')
                 input('\nPress <return> to continue.')
             elif self.choice == '3':
