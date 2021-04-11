@@ -1,5 +1,5 @@
-from console import OneShotConsole
 import sys
+from oneshotmail.console import OneShotConsole
 
 try:
     console = OneShotConsole()
