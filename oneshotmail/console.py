@@ -23,6 +23,13 @@ class OneShotConsole:
         print('0. Exit One Shot Mail.\n')
         self.choice = input('Enter option: ')
 
+    def print_sent_emails(self, one_shot):
+        print('\nEmails were sent to the following people:\n')
+        for email in one_shot.emails_sent:
+            print(f'{email["index"]}. {email["short_name"]} at "{email["full_name"]} <{email["email"]}>".')
+        print('\nThe trial run should now have completed.')
+        input('\nPress <return> to continue.')
+
     def run(self):
         one_shot = OneShot()
         while True:
@@ -42,13 +49,11 @@ class OneShotConsole:
                 print('   python -m smtpd -c DebuggingServer -n localhost:1025')
                 input('\nWhen you are ready to carry out the trial run, press <return>.')
                 one_shot.simple_test_run()
-                for email in one_shot.emails_sent:
-                    print(f'{email.index}. Message sent to {email.short_name} at "{email.full_name} <{email.email}>".')
-                print('\nThe trial run should now have completed.')
-                input('\nPress <return> to continue.')
+                self.print_sent_emails(one_shot)
             elif self.choice == '3':
-                print('\nOne Shot Mail will exit once all emails have been sent.\n')
+                print('\nOne Shot Mail will exit once all emails have been sent.')
                 one_shot.simple_send()
+                self.print_sent_emails(one_shot)
                 break
             elif self.choice == '0':
                 print('\nGoodbye!')

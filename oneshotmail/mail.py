@@ -64,6 +64,7 @@ class OneShot:
         with open(Path(self.base_dir, self.file_contacts)) as file:
             reader = csv.reader(file)
             next(reader)
+            self.emails_sent.clear()
             for index, (short_name, full_name, email) in enumerate(reader, start=1):
                 msg = EmailMessage()
                 msg.set_content(self.email_message.format(name=short_name))
@@ -71,8 +72,6 @@ class OneShot:
                 msg['From'] = self.email_from
                 msg['To'] = f'{full_name} <{email}>'
                 server.send_message(msg)
-                # TODO: remove print statement and find another way to get the data back - perhaps a class list?
-                self.emails_sent.clear()
                 self.emails_sent.append({'index': index, 'short_name': short_name,
                                          'full_name': full_name, 'email': email})
 
