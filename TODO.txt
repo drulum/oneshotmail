@@ -1,5 +1,6 @@
 TODO: Plan additional class methods to allow flexibility in file locations, console/GUI etc.
-TODO: Catch & handle exceptions in code rather than allowing the program to die if it encounters a problem. (Started.)
+TODO: Option to create core folders/files in console app?
+TODO: Catch & handle exceptions in code rather than allowing the program to die if it encounters a problem. (Started. .env catch needed)
 TODO: Implement testing using pytest.
 TODO: Improve the README.
 TODO: Improve and categorise this TODO file...
