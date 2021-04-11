@@ -1,5 +1,5 @@
 import os
-from mail import OneShot
+from oneshotmail.mail import OneShot
 
 
 class OneShotConsole:
