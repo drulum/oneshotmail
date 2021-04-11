@@ -34,6 +34,7 @@ class OneShotConsole:
                 print(f'\nThe message body is:\n{one_shot.email_message}')
                 input('\nPress <return> to continue.')
             elif self.choice == '2':
+                # TODO: Display information on launching debugging smtpd and require <return> to continue.
                 one_shot.simple_test_run()
                 input('\nPress <return> to continue.')
             elif self.choice == '3':
@@ -46,15 +47,3 @@ class OneShotConsole:
             else:
                 print('\nI did not recognise your selection. Please ensure you enter an option from the menu.')
                 input('\nPress <return> to continue.')
-
-
-if __name__ == '__main__':
-    try:
-        console = OneShotConsole()
-        console.run()
-    except FileNotFoundError as error:
-        print(f'\n{error}')
-        print('Please run the application again once this has been corrected.')
-        quit()
-
-    print('\nRun complete. All emails sent successfully.\n\nGoodbye!')
