@@ -10,4 +10,5 @@ src/oneshotmail/mail.py
 src/oneshotmail_drulum.egg-info/PKG-INFO
 src/oneshotmail_drulum.egg-info/SOURCES.txt
 src/oneshotmail_drulum.egg-info/dependency_links.txt
+src/oneshotmail_drulum.egg-info/requires.txt
 src/oneshotmail_drulum.egg-info/top_level.txt

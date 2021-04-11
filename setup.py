@@ -22,5 +22,9 @@ setuptools.setup(
     ],
     package_dir={"": "src"},
     packages=setuptools.find_packages(where="src"),
+    install_requires=[
+        'pytest',
+        'python-dotenv',
+    ],
     python_requires=">=3.6",
 )
