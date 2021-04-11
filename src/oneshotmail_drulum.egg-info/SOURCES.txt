@@ -1,0 +1,13 @@
+LICENSE
+README.md
+pyproject.toml
+setup.cfg
+setup.py
+src/oneshotmail/__init__.py
+src/oneshotmail/__main__.py
+src/oneshotmail/console.py
+src/oneshotmail/mail.py
+src/oneshotmail_drulum.egg-info/PKG-INFO
+src/oneshotmail_drulum.egg-info/SOURCES.txt
+src/oneshotmail_drulum.egg-info/dependency_links.txt
+src/oneshotmail_drulum.egg-info/top_level.txt
