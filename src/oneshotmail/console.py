@@ -1,5 +1,6 @@
 import os
 from oneshotmail.mail import OneShot
+from pathlib import Path
 
 
 class OneShotConsole:
@@ -31,6 +32,7 @@ class OneShotConsole:
         input('\nPress <return> to continue.')
 
     def run(self):
+        # TODO: run a filecheck on load and offer to create any missing files via mail.py
         one_shot = OneShot()
         while True:
             self.process_menu()

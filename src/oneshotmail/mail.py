@@ -16,6 +16,7 @@ email_host_password = os.getenv('EMAIL_HOST_PASSWORD')
 
 
 class OneShot:
+    # TODO: add a method to create any missing files & directories
 
     def __init__(self):
         self.base_dir = Path('email-preparation/')
@@ -32,7 +33,7 @@ class OneShot:
         """Takes a list of filenames, appends them to the base directory and confirms they exist.
         Raises a FileNotFound exception on the first filename that doesn't exist."""
         files = [self.file_from, self.file_subject, self.file_message, self.file_contacts]
-        # TODO: change this function so it includes .env and ensure the raise allows the option to create the files.
+        # TODO: change this function so it includes .env and change the raise to a return with a list of missing files
         for file in files:
             if not Path.is_file(Path(self.base_dir, file)):
                 raise FileNotFoundError(f'The file "{file}" was not found in the directory "{self.base_dir}".')
