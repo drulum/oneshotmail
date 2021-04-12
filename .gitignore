@@ -9,3 +9,7 @@ contacts.csv
 email-preparation/from.txt
 subject.txt
 message.txt
+
+# Exclude build content
+build
+dist
