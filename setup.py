@@ -4,7 +4,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="oneshotmail-drulum",
+    name="oneshotmail",
     version="0.2",
     author="Calum Andrew Morrell",
     author_email="calum@drulum.com",
