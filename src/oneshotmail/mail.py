@@ -6,14 +6,6 @@ from email.message import EmailMessage
 from pathlib import Path
 from dotenv import load_dotenv
 
-# TODO: Move the dotenv lines into a class method and ensure it's only called when and if needed.
-load_dotenv()
-
-email_host = os.getenv('EMAIL_HOST')
-email_port = os.getenv('EMAIL_PORT')
-email_host_user = os.getenv('EMAIL_HOST_USER')
-email_host_password = os.getenv('EMAIL_HOST_PASSWORD')
-
 
 class OneShot:
     # TODO: add a method to create any missing files & directories
@@ -24,6 +16,10 @@ class OneShot:
         self.file_subject = 'subject.txt'
         self.file_message = 'message.txt'
         self.file_contacts = 'contacts.csv'
+        self.email_host = None
+        self.email_port = None
+        self.email_host_user = None
+        self.email_host_password = None
         self.email_from = None
         self.email_subject = None
         self.email_message = None
@@ -37,6 +33,13 @@ class OneShot:
         for file in files:
             if not Path.is_file(Path(self.base_dir, file)):
                 raise FileNotFoundError(f'The file "{file}" was not found in the directory "{self.base_dir}".')
+
+    def load_env(self):
+        load_dotenv()
+        self.email_host = os.getenv('EMAIL_HOST')
+        self.email_port = os.getenv('EMAIL_PORT')
+        self.email_host_user = os.getenv('EMAIL_HOST_USER')
+        self.email_host_password = os.getenv('EMAIL_HOST_PASSWORD')
 
     def collect_message_parts(self):
         """Gets the static email data from the files."""
