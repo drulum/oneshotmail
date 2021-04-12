@@ -6,6 +6,7 @@ from email.message import EmailMessage
 from pathlib import Path
 from dotenv import load_dotenv
 
+# TODO: Move the dotenv lines into a class method and ensure it's only called when and if needed.
 load_dotenv()
 
 email_host = os.getenv('EMAIL_HOST')
@@ -31,6 +32,7 @@ class OneShot:
         """Takes a list of filenames, appends them to the base directory and confirms they exist.
         Raises a FileNotFound exception on the first filename that doesn't exist."""
         files = [self.file_from, self.file_subject, self.file_message, self.file_contacts]
+        # TODO: change this function so it includes .env and ensure the raise allows the option to create the files.
         for file in files:
             if not Path.is_file(Path(self.base_dir, file)):
                 raise FileNotFoundError(f'The file "{file}" was not found in the directory "{self.base_dir}".')
