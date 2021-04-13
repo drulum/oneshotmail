@@ -2,20 +2,22 @@ import csv
 import os
 import smtplib
 import ssl
+
 from email.message import EmailMessage
 from pathlib import Path
 from dotenv import load_dotenv
 
 
 class OneShot:
-    # TODO: add a method to create any missing files & directories
 
     def __init__(self):
-        self.base_dir = Path('email-preparation/')
-        self.file_from = 'from.txt'
-        self.file_subject = 'subject.txt'
-        self.file_message = 'message.txt'
-        self.file_contacts = 'contacts.csv'
+        self.base_dir = Path('./')
+        self.email_dir = Path('email-preparation/')
+        self.file_env = Path(self.base_dir, '.env')
+        self.file_from = Path(self.email_dir, 'from.txt')
+        self.file_subject = Path(self.email_dir, 'subject.txt')
+        self.file_message = Path(self.email_dir, 'message.txt')
+        self.file_contacts = Path(self.email_dir, 'contacts.csv')
         self.email_host = None
         self.email_port = None
         self.email_host_user = None
@@ -28,13 +30,26 @@ class OneShot:
     def confirm_files_exist(self):
         """Takes a list of filenames, appends them to the base directory and confirms they exist.
         Raises a FileNotFound exception on the first filename that doesn't exist."""
-        files = [self.file_from, self.file_subject, self.file_message, self.file_contacts]
-        # TODO: change this function so it includes .env and change the raise to a return with a list of missing files
+        directories = [self.base_dir, self.email_dir]
+        files = [self.file_env, self.file_from, self.file_subject, self.file_message, self.file_contacts]
+        missing_directories = []
+        missing_files = []
+        for directory in directories:
+            if not Path.is_dir(directory):
+                missing_directories.append(directory)
         for file in files:
-            if not Path.is_file(Path(self.base_dir, file)):
-                raise FileNotFoundError(f'The file "{file}" was not found in the directory "{self.base_dir}".')
+            if not Path.is_file(file):
+                missing_files.append(file)
+        return missing_directories, missing_files
+
+    def create_files(self, directories, files):
+        for directory in directories:
+            Path.mkdir(directory)
+        for file in files:
+            Path.touch(file)
 
     def load_env(self):
+        # TODO: check providing file location to load_dotenv
         load_dotenv()
         self.email_host = os.getenv('EMAIL_HOST')
         self.email_port = os.getenv('EMAIL_PORT')
@@ -43,11 +58,11 @@ class OneShot:
 
     def collect_message_parts(self):
         """Gets the static email data from the files."""
-        with open(Path(self.base_dir, self.file_from)) as file:
+        with open(self.file_from) as file:
             self.email_from = file.readline()
-        with open(Path(self.base_dir, self.file_subject)) as file:
+        with open(self.file_subject) as file:
             self.email_subject = file.readline()
-        with open(Path(self.base_dir, self.file_message)) as file:
+        with open(self.file_message) as file:
             self.email_message = file.read()
 
     def trial_run(self):
@@ -61,13 +76,13 @@ class OneShot:
     def email_run(self):
         """Connects to the live email server securely and send the emails."""
         context = ssl.create_default_context()
-        with smtplib.SMTP_SSL(email_host, email_port, context=context) as server:
-            server.login(email_host_user, email_host_password)
+        with smtplib.SMTP_SSL(self.email_host, self.email_port, context=context) as server:
+            server.login(self.email_host_user, self.email_host_password)
             self.send_emails(server)
 
     def send_emails(self, server):
         """Sends emails to the configured email server."""
-        with open(Path(self.base_dir, self.file_contacts)) as file:
+        with open(self.file_contacts) as file:
             reader = csv.reader(file)
             next(reader)
             self.emails_sent.clear()
