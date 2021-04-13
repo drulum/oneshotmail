@@ -1,4 +1,6 @@
 import os
+import sys
+
 from oneshotmail.mail import OneShot
 from pathlib import Path
 
@@ -32,8 +34,31 @@ class OneShotConsole:
         input('\nPress <return> to continue.')
 
     def run(self):
-        # TODO: run a filecheck on load and offer to create any missing files via mail.py
         one_shot = OneShot()
+        # Check the required directories and files exist.
+        directories, files = one_shot.confirm_files_exist()
+        # If any directories or files do not exist, ask the user if they should be created.
+        if directories or files:
+            if directories:
+                for directory in directories:
+                    print('Directory: ', directory)
+            if files:
+                for file in files:
+                    print('File: ', file)
+            choice = None
+            while choice not in ['Y', 'y', 'N', 'n', '']:
+                choice = input('Would you like these to be created for you? [Y/n] ')
+            if choice in ['Y', 'y', '']:
+                one_shot.create_files(directories, files)
+                # Advise the user they need to edit the newly created files before continuing.
+                print('\nThe files have been created but are currently empty.\n\nPlease add the necessary '
+                      'information to each before you re-run this application.')
+                sys.exit()
+            else:
+                print("\nThe program can't continue until these files exist.\n\nPlease either re-run this "
+                      "program and allow it to generate the files for you or create them yourself before re-running.")
+                sys.exit()
+
         while True:
             self.process_menu()
             if self.choice == '1':
@@ -54,6 +79,7 @@ class OneShotConsole:
                 self.print_sent_emails(one_shot)
             elif self.choice == '3':
                 print('\nOne Shot Mail will exit once all emails have been sent.')
+                one_shot.load_env()
                 one_shot.simple_send()
                 self.print_sent_emails(one_shot)
                 break

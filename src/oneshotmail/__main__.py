@@ -1,4 +1,5 @@
 import sys
+
 from oneshotmail.console import OneShotConsole
 
 try:
