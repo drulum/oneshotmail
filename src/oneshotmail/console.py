@@ -16,15 +16,44 @@ class OneShotConsole:
         else:
             os.system('clear')
 
-    def process_menu(self):
-        self.clear_screen()
-        print('One Shot Mail')
-        print('=============\n')
-        print('1. Preview the email that will be sent.')
-        print('2. Trial run with files in the email preparation sub directory.')
-        print('3. LIVE RUN with files in the email preparation sub directory.')
-        print('0. Exit One Shot Mail.\n')
-        self.choice = input('Enter option: ')
+    def process_menu(self, one_shot):
+        while True:
+            self.clear_screen()
+            print('One Shot Mail')
+            print('=============\n')
+            print('1. Preview the email that will be sent.')
+            print('2. Trial run with files in the email preparation sub directory.')
+            print('3. LIVE RUN with files in the email preparation sub directory.')
+            print('0. Exit One Shot Mail.\n')
+            self.choice = input('Enter option: ')
+            if self.choice == '1':
+                one_shot.construct()
+                print(f'\nEmails will be sent from "{one_shot.email_from}".')
+                print(f'\nThe subject line is "{one_shot.email_subject}"')
+                print(f'\nThe message body is:\n{one_shot.email_message}')
+                input('\nPress <return> to continue.')
+            elif self.choice == '2':
+                print('\nBefore continuing, carry out the following instructions.')
+                print('\n1. Open a second console window.')
+                print('   (Windows: Command Prompt. Linux: terminal)')
+                print('\n2. In the new console window, enter the following command.')
+                print('   (Linux: you may need to prefix with "sudo")')
+                print('   python -m smtpd -c DebuggingServer -n localhost:1025')
+                input('\nWhen you are ready to carry out the trial run, press <return>.')
+                one_shot.simple_test_run()
+                self.print_sent_emails(one_shot)
+            elif self.choice == '3':
+                print('\nOne Shot Mail will exit once all emails have been sent.')
+                one_shot.load_env()
+                one_shot.simple_send()
+                self.print_sent_emails(one_shot)
+                break
+            elif self.choice == '0':
+                print('\nGoodbye!')
+                sys.exit()
+            else:
+                print('\nI did not recognise your selection. Please ensure you enter an option from the menu.')
+                input('\nPress <return> to continue.')
 
     def print_sent_emails(self, one_shot):
         print('\nEmails were sent to the following people:\n')
@@ -55,37 +84,9 @@ class OneShotConsole:
                       'information to each before you re-run this application.')
                 sys.exit()
             else:
+                # If the files don't exist, the program can't do anything useful.
                 print("\nThe program can't continue until these files exist.\n\nPlease either re-run this "
                       "program and allow it to generate the files for you or create them yourself before re-running.")
                 sys.exit()
 
-        while True:
-            self.process_menu()
-            if self.choice == '1':
-                one_shot.construct()
-                print(f'\nEmails will be sent from "{one_shot.email_from}".')
-                print(f'\nThe subject line is "{one_shot.email_subject}"')
-                print(f'\nThe message body is:\n{one_shot.email_message}')
-                input('\nPress <return> to continue.')
-            elif self.choice == '2':
-                print('\nBefore continuing, carry out the following instructions.')
-                print('\n1. Open a second console window.')
-                print('   (Windows: Command Prompt. Linux: terminal)')
-                print('\n2. In the new console window, enter the following command.')
-                print('   (Linux: you may need to prefix with "sudo")')
-                print('   python -m smtpd -c DebuggingServer -n localhost:1025')
-                input('\nWhen you are ready to carry out the trial run, press <return>.')
-                one_shot.simple_test_run()
-                self.print_sent_emails(one_shot)
-            elif self.choice == '3':
-                print('\nOne Shot Mail will exit once all emails have been sent.')
-                one_shot.load_env()
-                one_shot.simple_send()
-                self.print_sent_emails(one_shot)
-                break
-            elif self.choice == '0':
-                print('\nGoodbye!')
-                quit()
-            else:
-                print('\nI did not recognise your selection. Please ensure you enter an option from the menu.')
-                input('\nPress <return> to continue.')
+        self.process_menu(one_shot)
