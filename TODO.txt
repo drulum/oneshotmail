@@ -6,4 +6,3 @@ TODO: Improve the README. It's probably outdated, again.
 TODO: Improve and categorise this TODO file...
 TODO: Consider creating a sub-directory for each mail batch. Select at runtime which to use? (Single subdir at present.)
 TODO: Improve the docstrings and comments in the code.
-TODO: It may be reaching the point where separation of mail from UI code is preferable.
