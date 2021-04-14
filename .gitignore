@@ -15,5 +15,8 @@ from.txt
 build
 dist
 
+# pytest
+.pytest_cache
+
 # Data I use for testing locally
 TESTING
