@@ -11,7 +11,6 @@ from dotenv import load_dotenv
 class OneShot:
 
     def __init__(self):
-        # TODO: update defaults test
         self.mode_live = False
         self.base_dir = Path('./')
         self.email_dir = Path('data/')

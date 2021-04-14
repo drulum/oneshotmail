@@ -1,8 +1,8 @@
 TODO: Plan additional class methods to allow flexibility in file locations, console/GUI etc.
-TODO: Option to create a launcher script for windows/linux for ease of use? (via console script)
+TODO: Option to create a launcher script for linux (in else: statement)
 TODO: Catch & handle exceptions in code rather than allowing the program to die if it encounters a problem. (Started. Mail server connection catch needed)
 TODO: Continue developing tests using pytest.
-TODO: Improve the README. It's probably outdated, again.
+TODO: Improve the README. It's heavily outdated.
 TODO: Improve and categorise this TODO file...
 TODO: Consider creating a sub-directory for each mail batch. Select at runtime which to use? (Single subdir at present.)
 TODO: Improve the docstrings and comments in the code.
