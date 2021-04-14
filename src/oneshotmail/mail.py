@@ -69,7 +69,6 @@ class OneShot:
                     fp.write('Linda,Linda Baker,email@domain.dom')
 
     def load_env(self):
-        # TODO: check providing file location to load_dotenv
         load_dotenv()
         self.email_host = os.getenv('EMAIL_HOST')
         self.email_port = os.getenv('EMAIL_PORT')
