@@ -9,6 +9,8 @@ data
 
 # Data I use for testing locally
 TESTING
+OneShotMail.bat
+TestMailServer.bat
 
 # Exclude build content
 build

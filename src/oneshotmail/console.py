@@ -7,6 +7,35 @@ from pathlib import Path
 
 class OneShotConsole:
 
+    def __init__(self):
+        self.start_test_mail = Path('TestMailServer.bat')
+        self.start_oneshotmail = Path('OneShotMail.bat')
+
+    def launchers_exist(self):
+        files = {'start_test_mail': self.start_test_mail, 'start_oneshotmail': self.start_oneshotmail}
+        missing_files = {}
+        for key, value in files.items():
+            if not Path.is_file(value):
+                missing_files[key] = value
+        return missing_files
+
+    def create_launchers(self, files):
+        if os.name == 'nt':
+            for file in files:
+                Path.touch(files[file])
+                with open(files[file], 'w') as fp:
+                    if file == 'start_test_mail':
+                        fp.write('@echo off')
+                        fp.write('\ncmd /k "python -m smtpd -c DebuggingServer -n localhost:1025"')
+                        fp.write('\npause')
+                    elif file == 'start_oneshotmail':
+                        fp.write('@echo off\n')
+                        fp.write(r'cmd /k "venv\Scripts\activate & python -m oneshotmail & deactivate & exit"')
+                        fp.write('\npause')
+        else:
+            # TODO: Create launchers for *nix
+            pass
+
     def clear_screen(self):
         if os.name == 'nt':
             os.system('cls')
@@ -21,13 +50,15 @@ class OneShotConsole:
             print('1. Preview the email that will be sent.')
             print('2. Trial run with files in the email preparation sub directory.')
             print('3. LIVE RUN with files in the email preparation sub directory.')
-            print('0. Exit One Shot Mail.\n')
             if one_shot.mode_live:
-                print('\nYou are currently using your LIVE RUN contacts file.\n')
-                print('C. Change to your TEST RUN contacts file.\n')
+                print('\nYou are currently using your LIVE RUN contacts file.')
+                print('C. Change to your TEST RUN contacts file.')
             else:
-                print('\nYou are currently using your TEST RUN contacts file.\n')
-                print('C. Change to your LIVE RUN contacts file.\n')
+                print('\nYou are currently using your TEST RUN contacts file.')
+                print('C. Change to your LIVE RUN contacts file.')
+            print('\nTwo scripts can be created to start the test email server and this application.')
+            print('L. Generate launcher scripts.')
+            print('\n0. Exit One Shot Mail.\n')
             choice = input('Enter option: ')
             if choice == '1':
                 one_shot.construct()
@@ -56,8 +87,23 @@ class OneShotConsole:
             elif choice in ['C', 'c']:
                 if one_shot.mode_live:
                     one_shot.mode_live = False
+                    print('\nThe TEST contacts file will now be used.')
+                    input('\nPress <return> to continue.')
                 else:
                     one_shot.mode_live = True
+                    print('\nThe LIVE contacts file will now be used.')
+                    input('\nPress <return> to continue.')
+            elif choice in ['L', 'l']:
+                files = self.launchers_exist()
+                if files:
+                    self.create_launchers(files)
+                    print('\nThe launchers have been created. Test them and edit paths if necessary.')
+                    input('\nPress <return> to continue.')
+                else:
+                    print('\nIt seems both launcher scripts already exist, so no action has been taken.')
+                    print('\nTo re-create them delete them from your One Shot Mail directory then choose '
+                          'this option again.')
+                    input('\nPress <return> to continue.')
             else:
                 print('\nI did not recognise your selection. Please ensure you enter an option from the menu.')
                 input('\nPress <return> to continue.')
