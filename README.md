@@ -1,3 +1,5 @@
+# SERIOUSLY OUTDATED - HOLD PLEASE
+
 Use Case
 ========
 Occasionally you may be required to send the same email to a number of people. This may be for regulatory reasons for a solicitor or accountant, or simply a group of family members you need to coordinate with. Using something like MailChimp would be overkill and allowing the option to unsubscribe would cause a problem for future required emails.
