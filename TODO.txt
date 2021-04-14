@@ -1,10 +1,9 @@
 TODO: Plan additional class methods to allow flexibility in file locations, console/GUI etc.
-TODO: Option to create core folders/files in console app? Include a launcher script for windows/linux for ease of use?
-TODO: Catch & handle exceptions in code rather than allowing the program to die if it encounters a problem. (Started. .env catch needed)
-TODO: Implement testing using pytest.
+TODO: Option to create a launcher script for windows/linux for ease of use? (via console script)
+TODO: Catch & handle exceptions in code rather than allowing the program to die if it encounters a problem. (Started. Mail server connection catch needed)
+TODO: Continue developing tests using pytest.
 TODO: Improve the README. It's probably outdated, again.
 TODO: Improve and categorise this TODO file...
 TODO: Consider creating a sub-directory for each mail batch. Select at runtime which to use? (Single subdir at present.)
 TODO: Improve the docstrings and comments in the code.
 TODO: It may be reaching the point where separation of mail from UI code is preferable.
-TODO: Add an option to the console app to use a contacts-test.csv in order to carry out a controlled trial + live run.

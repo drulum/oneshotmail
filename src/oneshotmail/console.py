@@ -7,9 +7,6 @@ from pathlib import Path
 
 class OneShotConsole:
 
-    def __init__(self):
-        self.choice = None
-
     def clear_screen(self):
         if os.name == 'nt':
             os.system('cls')
@@ -25,14 +22,20 @@ class OneShotConsole:
             print('2. Trial run with files in the email preparation sub directory.')
             print('3. LIVE RUN with files in the email preparation sub directory.')
             print('0. Exit One Shot Mail.\n')
-            self.choice = input('Enter option: ')
-            if self.choice == '1':
+            if one_shot.mode_live:
+                print('\nYou are currently using your LIVE RUN contacts file.\n')
+                print('C. Change to your TEST RUN contacts file.\n')
+            else:
+                print('\nYou are currently using your TEST RUN contacts file.\n')
+                print('C. Change to your LIVE RUN contacts file.\n')
+            choice = input('Enter option: ')
+            if choice == '1':
                 one_shot.construct()
                 print(f'\nEmails will be sent from "{one_shot.email_from}".')
                 print(f'\nThe subject line is "{one_shot.email_subject}"')
                 print(f'\nThe message body is:\n{one_shot.email_message}')
                 input('\nPress <return> to continue.')
-            elif self.choice == '2':
+            elif choice == '2':
                 print('\nBefore continuing, carry out the following instructions.')
                 print('\n1. Open a second console window.')
                 print('   (Windows: Command Prompt. Linux: terminal)')
@@ -42,15 +45,19 @@ class OneShotConsole:
                 input('\nWhen you are ready to carry out the trial run, press <return>.')
                 one_shot.simple_test_run()
                 self.print_sent_emails(one_shot)
-            elif self.choice == '3':
-                print('\nOne Shot Mail will exit once all emails have been sent.')
+            elif choice == '3':
+                print('\nBeginning the send process. It may take a few minutes before it completes, please be patient.')
                 one_shot.load_env()
                 one_shot.simple_send()
                 self.print_sent_emails(one_shot)
-                break
-            elif self.choice == '0':
+            elif choice == '0':
                 print('\nGoodbye!')
                 sys.exit()
+            elif choice in ['C', 'c']:
+                if one_shot.mode_live:
+                    one_shot.mode_live = False
+                else:
+                    one_shot.mode_live = True
             else:
                 print('\nI did not recognise your selection. Please ensure you enter an option from the menu.')
                 input('\nPress <return> to continue.')

@@ -11,6 +11,8 @@ from dotenv import load_dotenv
 class OneShot:
 
     def __init__(self):
+        # TODO: update defaults test
+        self.mode_live = False
         self.base_dir = Path('./')
         self.email_dir = Path('email-preparation/')
         self.file_env = Path(self.base_dir, '.env')
@@ -18,6 +20,7 @@ class OneShot:
         self.file_subject = Path(self.email_dir, 'subject.txt')
         self.file_message = Path(self.email_dir, 'message.txt')
         self.file_contacts = Path(self.email_dir, 'contacts.csv')
+        self.file_contacts_test = Path(self.email_dir, 'contacts-test.csv')
         self.email_host = None
         self.email_port = None
         self.email_host_user = None
@@ -32,7 +35,8 @@ class OneShot:
         Raises a FileNotFound exception on the first filename that doesn't exist."""
         directories = {'base_dir': self.base_dir, 'email_dir': self.email_dir}
         files = {'file_env': self.file_env, 'file_from': self.file_from, 'file_subject': self.file_subject,
-                 'file_message': self.file_message, 'file_contacts': self.file_contacts}
+                 'file_message': self.file_message, 'file_contacts': self.file_contacts,
+                 'file_contacts_test': self.file_contacts_test}
         missing_directories = {}
         missing_files = {}
         for key, value in directories.items():
@@ -56,17 +60,32 @@ class OneShot:
                     fp.write('EMAIL_HOST_PASSWORD = supersecretpassword')
                 elif file == 'file_from':
                     fp.write('Fist Last <email@domain.dom>')
+                    fp.write('\n\nEnsure you delete all content in this file before writing your own to replace it.')
                 elif file == 'file_subject':
                     fp.write("Type a short single line that will display in the recipient's inbox.")
+                    fp.write('\n\nEnsure you delete all content in this file before writing your own to replace it.')
                 elif file == 'file_message':
                     fp.write('Hello {name},\n\n')
                     fp.write('Write your message body here as you normally would over as many lines as you need to.\n')
                     fp.write('\nThe short name in the contacts.csv will appear wherever you place {name}!\n')
                     fp.write('\n--\nFirst Last\nFooter Company & Co.\nemail@domain.dom')
+                    fp.write('\n\nEnsure you delete all content in this file before writing your own to replace it.')
                 elif file == 'file_contacts':
                     fp.write('Short name,Full name,Email address\n')
                     fp.write('Steve,Steve Parrot,email@domain.dom\n')
-                    fp.write('Linda,Linda Baker,email@domain.dom')
+                    fp.write('Linda,Linda Baker,email@domain.dom\n\n')
+                    fp.write('The short name will be used to replace the {name} tag in the message.txt file. '
+                             'The full name and email address fields will be combined to the format '
+                             '"Linda Baker <email@domain.dom>" to ensure it displays correctly in the inbox.')
+                    fp.write('\n\nEnsure you delete all but the first row of this file before adding your contacts.')
+                elif file == 'file_contacts_test':
+                    fp.write('Short name,Full name,Email address\n')
+                    fp.write('Steve,Steve Parrot,email@domain.dom\n')
+                    fp.write('Linda,Linda Baker,email@domain.dom\n\n')
+                    fp.write('Use this file to send the email to 2 or 3 accounts you can access on '
+                             'different providers. This will allow you to confirm a live send is working '
+                             'before you send to the people you care about contacting.')
+                    fp.write('\n\nEnsure you delete all but the first row of this file before adding your contacts.')
 
     def load_env(self):
         load_dotenv()
@@ -101,7 +120,11 @@ class OneShot:
 
     def send_emails(self, server):
         """Sends emails to the configured email server."""
-        with open(self.file_contacts) as file:
+        if self.mode_live:
+            contacts = self.file_contacts
+        else:
+            contacts = self.file_contacts_test
+        with open(contacts) as file:
             reader = csv.reader(file)
             next(reader)
             self.emails_sent.clear()
