@@ -14,7 +14,7 @@ class OneShot:
         # TODO: update defaults test
         self.mode_live = False
         self.base_dir = Path('./')
-        self.email_dir = Path('email-preparation/')
+        self.email_dir = Path('data/')
         self.file_env = Path(self.base_dir, '.env')
         self.file_from = Path(self.email_dir, 'from.txt')
         self.file_subject = Path(self.email_dir, 'subject.txt')
