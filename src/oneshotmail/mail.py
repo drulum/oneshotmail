@@ -30,23 +30,43 @@ class OneShot:
     def confirm_files_exist(self):
         """Takes a list of filenames, appends them to the base directory and confirms they exist.
         Raises a FileNotFound exception on the first filename that doesn't exist."""
-        directories = [self.base_dir, self.email_dir]
-        files = [self.file_env, self.file_from, self.file_subject, self.file_message, self.file_contacts]
-        missing_directories = []
-        missing_files = []
-        for directory in directories:
-            if not Path.is_dir(directory):
-                missing_directories.append(directory)
-        for file in files:
-            if not Path.is_file(file):
-                missing_files.append(file)
+        directories = {'base_dir': self.base_dir, 'email_dir': self.email_dir}
+        files = {'file_env': self.file_env, 'file_from': self.file_from, 'file_subject': self.file_subject,
+                 'file_message': self.file_message, 'file_contacts': self.file_contacts}
+        missing_directories = {}
+        missing_files = {}
+        for key, value in directories.items():
+            if not Path.is_dir(value):
+                missing_directories[key] = value
+        for key, value in files.items():
+            if not Path.is_file(value):
+                missing_files[key] = value
         return missing_directories, missing_files
 
     def create_files(self, directories, files):
         for directory in directories:
-            Path.mkdir(directory)
+            Path.mkdir(directories[directory])
         for file in files:
-            Path.touch(file)
+            Path.touch(files[file])
+            with open(files[file], 'w') as fp:
+                if file == 'file_env':
+                    fp.write('EMAIL_HOST = mail.domain.dom\n')
+                    fp.write('EMAIL_PORT = 465\n')
+                    fp.write('EMAIL_HOST_USER = person@domain.dom\n')
+                    fp.write('EMAIL_HOST_PASSWORD = supersecretpassword')
+                elif file == 'file_from':
+                    fp.write('Fist Last <email@domain.dom>')
+                elif file == 'file_subject':
+                    fp.write("Type a short single line that will display in the recipient's inbox.")
+                elif file == 'file_message':
+                    fp.write('Hello {name},\n\n')
+                    fp.write('Write your message body here as you normally would over as many lines as you need to.\n')
+                    fp.write('\nThe short name in the contacts.csv will appear wherever you place {name}!\n')
+                    fp.write('\n--\nFirst Last\nFooter Company & Co.\nemail@domain.dom')
+                elif file == 'file_contacts':
+                    fp.write('Short name,Full name,Email address\n')
+                    fp.write('Steve,Steve Parrot,email@domain.dom\n')
+                    fp.write('Linda,Linda Baker,email@domain.dom')
 
     def load_env(self):
         # TODO: check providing file location to load_dotenv

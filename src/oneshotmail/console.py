@@ -70,10 +70,10 @@ class OneShotConsole:
         if directories or files:
             if directories:
                 for directory in directories:
-                    print('Directory: ', directory)
+                    print('Directory: ', directories[directory])
             if files:
                 for file in files:
-                    print('File: ', file)
+                    print('File: ', files[file])
             choice = None
             while choice not in ['Y', 'y', 'N', 'n', '']:
                 choice = input('Would you like these to be created for you? [Y/n] ')

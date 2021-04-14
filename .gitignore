@@ -9,7 +9,11 @@ contacts.csv
 email-preparation/from.txt
 subject.txt
 message.txt
+from.txt
 
 # Exclude build content
 build
 dist
+
+# Data I use for testing locally
+TESTING
