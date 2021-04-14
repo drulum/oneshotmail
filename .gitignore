@@ -6,7 +6,7 @@
 
 # Do not upload any real world data.
 contacts.csv
-contacts-test.csv
+contacts_test.csv
 email-preparation/from.txt
 subject.txt
 message.txt

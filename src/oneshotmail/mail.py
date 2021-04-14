@@ -20,7 +20,7 @@ class OneShot:
         self.file_subject = Path(self.email_dir, 'subject.txt')
         self.file_message = Path(self.email_dir, 'message.txt')
         self.file_contacts = Path(self.email_dir, 'contacts.csv')
-        self.file_contacts_test = Path(self.email_dir, 'contacts-test.csv')
+        self.file_contacts_test = Path(self.email_dir, 'contacts_test.csv')
         self.email_host = None
         self.email_port = None
         self.email_host_user = None
