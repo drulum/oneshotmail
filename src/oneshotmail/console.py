@@ -8,6 +8,7 @@ from pathlib import Path
 class OneShotConsole:
 
     def __init__(self):
+        # FIXME: need to form launcher names based on OS
         self.start_test_mail = Path('TestMailServer.bat')
         self.start_oneshotmail = Path('OneShotMail.bat')
 
@@ -33,8 +34,18 @@ class OneShotConsole:
                         fp.write(r'cmd /k "venv\Scripts\activate & python -m oneshotmail & deactivate & exit"')
                         fp.write('\npause')
         else:
-            # TODO: Create launchers for *nix
-            pass
+            for file in files:
+                # TODO: Need to set scrips as user executable.
+                Path.touch(files[file])
+                with open(files[file], 'w') as fp:
+                    if file == 'start_test_mail':
+                        fp.write('echo "Test mail server is ready."\n')
+                        fp.write('python -m smtpd -c DebuggingServer -n localhost:1025')
+                    elif file == 'start_oneshotmail':
+                        fp.write('./venv/bin/activate\n')
+                        fp.write('python -m oneshotmail\n')
+                        fp.write('deactivate\n')
+                        fp.write('exit')
 
     def clear_screen(self):
         if os.name == 'nt':
