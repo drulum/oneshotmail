@@ -1,8 +1,19 @@
-TODO: Plan additional class methods to allow flexibility in file locations, console/GUI etc.
-TODO: Option to create a launcher script for linux (in else: statement)
+Project admin
+TODO: Improve and categorise this TODO file...
+TODO: Improve the README. It's heavily outdated.
+TODO: Improve the docstrings and comments in the code.
+TODO: Plan additional class methods to allow flexibility in file locations etc.
 TODO: Catch & handle exceptions in code rather than allowing the program to die if it encounters a problem. (Started. Mail server connection catch needed)
 TODO: Continue developing tests using pytest.
-TODO: Improve the README. It's heavily outdated.
-TODO: Improve and categorise this TODO file...
 TODO: Consider creating a sub-directory for each mail batch. Select at runtime which to use? (Single subdir at present.)
-TODO: Improve the docstrings and comments in the code.
+
+Data Layer
+TODO: Abstract the data layer to provide for file (as is) and db (sqlite).
+TODO: Function to ingest contacts from csv. Append to current db and replace current db.
+TODO: Create a new mailshot, complete with from / subject / message and relations to contacts sent.
+
+Console
+TODO: Complete and test *nix launcher script generation.
+
+GUI
+TODO: GTK?
