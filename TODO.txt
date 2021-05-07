@@ -16,4 +16,4 @@ Console
 TODO: Complete and test *nix launcher script generation.
 
 GUI
-TODO: GTK?
+TODO: Qt6 using PySide6. Create a new project as a distribution and use this project as a library for it.
