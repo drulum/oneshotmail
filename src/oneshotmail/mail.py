@@ -8,7 +8,18 @@ from pathlib import Path
 from dotenv import load_dotenv
 
 # TODO: Alter as necessary to build an array of EmailMessages and pass that to the relevant send method.
+
+
 class OneShot:
+    # TODO: I can't help feeling most of these variables would be better as a dictionary. Would certain be neater.
+    email_host = None
+    email_port = None
+    email_host_user = None
+    email_host_password = None
+    email_from = None
+    email_subject = None
+    email_message = None
+    emails_sent = []
 
     def __init__(self):
         self.mode_live = False
@@ -20,14 +31,6 @@ class OneShot:
         self.file_message = Path(self.email_dir, 'message.txt')
         self.file_contacts = Path(self.email_dir, 'contacts.csv')
         self.file_contacts_test = Path(self.email_dir, 'contacts_test.csv')
-        self.email_host = None
-        self.email_port = None
-        self.email_host_user = None
-        self.email_host_password = None
-        self.email_from = None
-        self.email_subject = None
-        self.email_message = None
-        self.emails_sent = []
 
     def confirm_files_exist(self):
         """Takes a list of filenames, appends them to the base directory and confirms they exist.
