@@ -7,7 +7,7 @@ from email.message import EmailMessage
 from pathlib import Path
 from dotenv import load_dotenv
 
-
+# TODO: Alter as necessary to build an array of EmailMessages and pass that to the relevant send method.
 class OneShot:
 
     def __init__(self):
